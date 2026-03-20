@@ -479,7 +479,7 @@ def build_html(national_rows: list[dict], lac_rows: list[dict],
 <header class="site-header">
   <div>
     <h1>🎓 Elite U.S. College Data Sheet</h1>
-    <sub>Top 100 National Universities &amp; Top 100 Liberal Arts Colleges · 2024–2025</sub>
+    <sub>Top 100 National Universities &amp; Top 100 Liberal Arts Colleges · 2025–2026</sub>
   </div>
   <div class="updated">Generated: {now}<br/>Scorecard: {scorecard_age} · Gemini: {gemini_age}</div>
 </header>
