@@ -12,7 +12,8 @@ BATCH_SIZE = 15  # colleges per Gemini request (balance speed vs. accuracy)
 
 SYSTEM_PROMPT = """You are a precise college admissions data assistant.
 Return ONLY valid JSON with no markdown, no explanation, no code fences.
-Use null for any field you are not confident about.
+Use null for any field you are not confident about — EXCEPT avg_gpa_weighted:
+for GPA always provide your best estimate based on publicly known data.
 Base your answers on the most recent publicly available data (2024-2025 academic year)."""
 
 def _build_prompt(colleges: list[dict], category: str) -> str:
@@ -27,7 +28,7 @@ Schools:
 Return a JSON array. Each object must have EXACTLY these fields:
 - "name": exact school name from the list above
 - "us_news_rank": integer US News {category} rank, or null
-- "avg_gpa_weighted": float, average weighted GPA of admitted freshmen (e.g. 4.15), or null
+- "avg_gpa_weighted": float, average weighted GPA of admitted freshmen class. Use widely published figures (e.g. Harvard ~4.18, MIT ~4.17, Stanford ~4.18). Always provide your best estimate — do NOT return null.
 - "test_policy": one of "Required", "Optional", "Blind", or null
 - "has_ed": true or false — does the school offer Early Decision?
 - "has_ea": true or false — does the school offer Early Action?
@@ -68,7 +69,7 @@ def fetch_gemini_data(colleges: list[dict], api_key: str, category: str) -> dict
 
         try:
             response = client.models.generate_content(
-                model="gemini-2.0-flash",
+                model="gemini-2.5-flash",
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     system_instruction=SYSTEM_PROMPT,
