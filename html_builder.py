@@ -226,7 +226,7 @@ def _defer_span(defer):
 
 # ── Row builder ─────────────────────────────────────────────────────────────
 
-def _build_row(r: dict) -> str:
+def _build_row(r: dict, num: int = 0) -> str:
     # Rank (AI)
     rank_raw = r.get("_rank_raw")
     rank_disp = f"{rank_raw} ★" if rank_raw else None
@@ -256,10 +256,8 @@ def _build_row(r: dict) -> str:
 
     NA = '<span class="na">—</span>'
     cells = []
-    # 1. Rank
-    rank_cls = ' ai-est' if rank_raw else ''
-    rank_val = str(rank_raw) if rank_raw else NA
-    cells.append(f'<td class="col-rank{rank_cls}">{rank_val}</td>')
+    # 1. Row number
+    cells.append(f'<td class="col-rank">{num}</td>')
     # 2. Name (State)
     cells.append(f'<td><strong>{r["name"]}</strong> '
                  f'<span style="color:#888">({r["state"]})</span></td>')
@@ -325,7 +323,7 @@ def _build_table(tid: str, rows: list[dict]) -> str:
         f'<th data-col="{i}" class="{cls}">{label}</th>'
         for i, (label, cls) in enumerate(headers)
     )
-    rows_html = "\n".join(_build_row(r) for r in rows)
+    rows_html = "\n".join(_build_row(r, i+1) for i, r in enumerate(rows))
     return f"""
 <div class="dt-controls">
   <div>
