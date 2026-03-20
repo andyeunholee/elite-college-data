@@ -12,8 +12,8 @@ BATCH_SIZE = 15  # colleges per Gemini request (balance speed vs. accuracy)
 
 SYSTEM_PROMPT = """You are a precise college admissions data assistant.
 Return ONLY valid JSON with no markdown, no explanation, no code fences.
-Use null for any field you are not confident about — EXCEPT avg_gpa_weighted, sat_midpoint, and act_composite:
-for these three fields always provide your best estimate based on publicly known data. Never return null for them.
+Use null for any field you are not confident about — EXCEPT avg_gpa_weighted, sat_midpoint, act_composite, and acceptance_rate_regular:
+for these four fields always provide your best estimate based on publicly known data. Never return null for them.
 Base your answers on the most recent publicly available data (2024-2025 academic year)."""
 
 def _build_prompt(colleges: list[dict], category: str) -> str:
@@ -31,6 +31,7 @@ Return a JSON array. Each object must have EXACTLY these fields:
 - "avg_gpa_weighted": float, average weighted GPA of admitted freshmen class. Use widely published figures (e.g. Harvard ~4.18, MIT ~4.17, Stanford ~4.18). Always provide your best estimate — do NOT return null.
 - "sat_midpoint": integer, SAT composite midpoint score of admitted freshmen (e.g. 1510). Use widely known figures. Always provide your best estimate — do NOT return null.
 - "act_composite": integer, ACT composite midpoint score of admitted freshmen (e.g. 34). Use widely known figures. Always provide your best estimate — do NOT return null.
+- "acceptance_rate_regular": float as percentage, overall (Regular Decision) acceptance rate (e.g. 3.5 means 3.5%). Use the most recent published figures. Always provide your best estimate — do NOT return null.
 - "test_policy": one of "Required", "Optional", "Blind", or null
 - "has_ed": true or false — does the school offer Early Decision?
 - "has_ea": true or false — does the school offer Early Action?
@@ -88,11 +89,12 @@ def fetch_gemini_data(colleges: list[dict], api_key: str, category: str) -> dict
                 matched_name = _find_match(name, batch)
                 if matched_name:
                     results[matched_name] = {
-                        "us_news_rank":        entry.get("us_news_rank"),
-                        "avg_gpa_weighted":    entry.get("avg_gpa_weighted"),
-                        "sat_midpoint":        entry.get("sat_midpoint"),
-                        "act_composite":       entry.get("act_composite"),
-                        "test_policy":         entry.get("test_policy"),
+                        "us_news_rank":           entry.get("us_news_rank"),
+                        "avg_gpa_weighted":       entry.get("avg_gpa_weighted"),
+                        "sat_midpoint":           entry.get("sat_midpoint"),
+                        "act_composite":          entry.get("act_composite"),
+                        "acceptance_rate_regular": entry.get("acceptance_rate_regular"),
+                        "test_policy":            entry.get("test_policy"),
                         "has_ed":              entry.get("has_ed"),
                         "has_ea":              entry.get("has_ea"),
                         "ed_deadline":         entry.get("ed_deadline"),
@@ -107,7 +109,8 @@ def fetch_gemini_data(colleges: list[dict], api_key: str, category: str) -> dict
             for c in batch:
                 results[c["name"]] = {k: None for k in [
                     "us_news_rank", "avg_gpa_weighted", "sat_midpoint", "act_composite",
-                    "test_policy", "has_ed", "has_ea", "ed_deadline", "ea_deadline",
+                    "acceptance_rate_regular", "test_policy",
+                    "has_ed", "has_ea", "ed_deadline", "ea_deadline",
                     "early_acceptance_rate", "defer_policy",
                 ]}
 

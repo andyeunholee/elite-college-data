@@ -60,9 +60,14 @@ def _merge(college: dict, scorecard: dict, gemini: dict) -> dict:
 
     rb    = sc.get("room_board")
     total = sc.get("total_tuition")
-    acc   = sc.get("acceptance_rate")
     ratio = sc.get("faculty_ratio")
     enroll = sc.get("enrollment")
+
+    # Acceptance rate — Gemini primary (Scorecard often wrong/missing for elite schools)
+    gm_acc = gm.get("acceptance_rate_regular")
+    sc_acc = sc.get("acceptance_rate")
+    acc = gm_acc if gm_acc is not None else sc_acc
+    acc_ai = gm_acc is not None
 
     defer_raw = gm.get("defer_policy")
 
@@ -79,7 +84,8 @@ def _merge(college: dict, scorecard: dict, gemini: dict) -> dict:
         "_early_rate_raw":  gm.get("early_acceptance_rate"),
         "sat_act":          sat_act,
         "_sat_act_ai":      sat_act_ai,
-        "acceptance_rate":  f"{acc}%" if acc else None,
+        "acceptance_rate":  f"{acc}%" if acc is not None else None,
+        "_acc_ai":          acc_ai,
         "enrollment":       f"{enroll:,}" if enroll else None,
         "ratio":            f"{ratio}:1" if ratio else None,
         "tuition":          tuition,

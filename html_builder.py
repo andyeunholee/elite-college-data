@@ -269,8 +269,8 @@ def _build_row(r: dict, num: int = 0) -> str:
     ai_tp = bool(r.get("_test_policy_raw"))
     cells.append(f'<td class="text-center{"  ai-est" if ai_tp else ""}">'
                  f'{_test_pill(r.get("_test_policy_raw"))}</td>')
-    # 6. Acceptance rate (official)
-    cells.append(_cell(r.get("acceptance_rate")))
+    # 6. Acceptance rate (Gemini primary)
+    cells.append(_cell(r.get("acceptance_rate"), ai=bool(r.get("_acc_ai"))))
     # 7. ED/EA (AI)
     cells.append(f'<td class="text-center ai-est">{edea_html}</td>')
     # 8. Due date (AI)
