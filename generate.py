@@ -37,8 +37,14 @@ def _merge(college: dict, scorecard: dict, gemini: dict) -> dict:
     sc    = scorecard.get(name, {})
     gm    = gemini.get(name, {})
 
-    # SAT/ACT
-    sat, act = sc.get("sat_total"), sc.get("act_midpoint")
+    # SAT/ACT — Gemini primary (more accurate for elite schools), Scorecard fallback
+    gm_sat = gm.get("sat_midpoint")
+    gm_act = gm.get("act_composite")
+    sc_sat = sc.get("sat_total")
+    sc_act = sc.get("act_midpoint")
+    sat = gm_sat or sc_sat
+    act = gm_act or sc_act
+    sat_act_ai = bool(gm_sat or gm_act)
     parts = []
     if sat: parts.append(f"SAT {sat}")
     if act: parts.append(f"ACT {act}")
@@ -72,6 +78,7 @@ def _merge(college: dict, scorecard: dict, gemini: dict) -> dict:
         "_ea_deadline":     gm.get("ea_deadline"),
         "_early_rate_raw":  gm.get("early_acceptance_rate"),
         "sat_act":          sat_act,
+        "_sat_act_ai":      sat_act_ai,
         "acceptance_rate":  f"{acc}%" if acc else None,
         "enrollment":       f"{enroll:,}" if enroll else None,
         "ratio":            f"{ratio}:1" if ratio else None,

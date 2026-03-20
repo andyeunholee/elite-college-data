@@ -264,7 +264,7 @@ def _build_row(r: dict, num: int = 0) -> str:
     # 3. GPA (AI)
     cells.append(_cell(gpa_disp, ai=bool(gpa_raw)))
     # 4. SAT/ACT (official)
-    cells.append(_cell(r.get("sat_act")))
+    cells.append(_cell(r.get("sat_act"), ai=bool(r.get("_sat_act_ai"))))
     # 5. Test policy (AI)
     ai_tp = bool(r.get("_test_policy_raw"))
     cells.append(f'<td class="text-center{"  ai-est" if ai_tp else ""}">'
