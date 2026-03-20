@@ -1,0 +1,126 @@
+# fetchers/gemini_fetcher.py
+# Uses Google Gemini API to fetch policy/qualitative data for each college.
+# All values returned are marked as AI-estimated.
+
+import json
+import time
+import re
+from google import genai
+from google.genai import types
+
+BATCH_SIZE = 15  # colleges per Gemini request (balance speed vs. accuracy)
+
+SYSTEM_PROMPT = """You are a precise college admissions data assistant.
+Return ONLY valid JSON with no markdown, no explanation, no code fences.
+Use null for any field you are not confident about.
+Base your answers on the most recent publicly available data (2024-2025 academic year)."""
+
+def _build_prompt(colleges: list[dict], category: str) -> str:
+    names = [f'{i+1}. {c["name"]} ({c["state"]})' for i, c in enumerate(colleges)]
+    school_list = "\n".join(names)
+
+    return f"""For the following {category}, provide the most recent (2024-2025) admissions data.
+
+Schools:
+{school_list}
+
+Return a JSON array. Each object must have EXACTLY these fields:
+- "name": exact school name from the list above
+- "us_news_rank": integer US News {category} rank, or null
+- "avg_gpa_weighted": float, average weighted GPA of admitted freshmen (e.g. 4.15), or null
+- "test_policy": one of "Required", "Optional", "Blind", or null
+- "has_ed": true or false — does the school offer Early Decision?
+- "has_ea": true or false — does the school offer Early Action?
+- "ed_deadline": string "MM/DD" format (e.g. "11/01"), or null
+- "ea_deadline": string "MM/DD" format (e.g. "11/01"), or null
+- "early_acceptance_rate": float as percentage (e.g. 18.5 means 18.5%), or null
+- "defer_policy": true if the school defers early applicants to RD, false if not, null if unknown
+
+Return ONLY the JSON array, nothing else."""
+
+
+def _extract_json(text: str) -> list:
+    """Robustly extract a JSON array from Gemini's response."""
+    # Strip markdown code fences if present
+    text = re.sub(r"```(?:json)?", "", text).strip()
+    # Find the first [ ... ] block
+    match = re.search(r"\[.*\]", text, re.DOTALL)
+    if match:
+        return json.loads(match.group())
+    return json.loads(text)
+
+
+def fetch_gemini_data(colleges: list[dict], api_key: str, category: str) -> dict:
+    """
+    Fetch AI-estimated policy/qualitative data for all colleges via Gemini.
+    category: "National Universities" or "Liberal Arts Colleges"
+    Returns: {"CollegeName": {gemini fields}, ...}
+    """
+    client = genai.Client(api_key=api_key)
+
+    results = {}
+    batches = [colleges[i:i+BATCH_SIZE] for i in range(0, len(colleges), BATCH_SIZE)]
+    total_batches = len(batches)
+
+    for batch_num, batch in enumerate(batches, 1):
+        print(f"  [Gemini] Batch {batch_num}/{total_batches} ({len(batch)} schools) ...")
+        prompt = _build_prompt(batch, category)
+
+        try:
+            response = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=SYSTEM_PROMPT,
+                ),
+            )
+            raw_text = response.text
+            parsed = _extract_json(raw_text)
+
+            for entry in parsed:
+                name = entry.get("name")
+                if not name:
+                    continue
+                # Match against original college name (flexible)
+                matched_name = _find_match(name, batch)
+                if matched_name:
+                    results[matched_name] = {
+                        "us_news_rank":        entry.get("us_news_rank"),
+                        "avg_gpa_weighted":    entry.get("avg_gpa_weighted"),
+                        "test_policy":         entry.get("test_policy"),
+                        "has_ed":              entry.get("has_ed"),
+                        "has_ea":              entry.get("has_ea"),
+                        "ed_deadline":         entry.get("ed_deadline"),
+                        "ea_deadline":         entry.get("ea_deadline"),
+                        "early_acceptance_rate": entry.get("early_acceptance_rate"),
+                        "defer_policy":        entry.get("defer_policy"),
+                    }
+
+        except Exception as e:
+            print(f"  [Gemini] Error on batch {batch_num}: {e}")
+            # Fill with nulls for failed batch
+            for c in batch:
+                results[c["name"]] = {k: None for k in [
+                    "us_news_rank", "avg_gpa_weighted", "test_policy",
+                    "has_ed", "has_ea", "ed_deadline", "ea_deadline",
+                    "early_acceptance_rate", "defer_policy",
+                ]}
+
+        if batch_num < total_batches:
+            time.sleep(2)  # avoid rate limiting between batches
+
+    return results
+
+
+def _find_match(gemini_name: str, batch: list[dict]) -> str | None:
+    """Find the best-matching college name from the batch."""
+    gemini_lower = gemini_name.lower().strip()
+    # Exact match first
+    for c in batch:
+        if c["name"].lower().strip() == gemini_lower:
+            return c["name"]
+    # Partial match
+    for c in batch:
+        if gemini_lower in c["name"].lower() or c["name"].lower() in gemini_lower:
+            return c["name"]
+    return None
