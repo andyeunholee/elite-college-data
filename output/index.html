@@ -32,6 +32,18 @@ body {
 .site-header h1  { font-size: 1.7rem; font-weight: 700; }
 .site-header sub { font-size: .85rem; opacity: .7; margin-top: .2rem; display:block; }
 .updated         { font-size: .78rem; opacity: .7; text-align: right; }
+.header-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: .75rem;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background .2s;
+}
+.header-btn:hover { background: rgba(255,255,255,0.28); }
 
 /* ── Info bar ── */
 .info-bar {
@@ -173,7 +185,13 @@ tbody td { padding: .45rem .5rem; vertical-align: middle; white-space: nowrap; }
     <h1>🎓 Elite U.S. College Data Sheet</h1>
     <sub>Top 100 National Universities &amp; Top 100 Liberal Arts Colleges · 2025–2026</sub>
   </div>
-  <div class="updated">Generated: March 20, 2026 17:55<br/>Scorecard: 1h ago · Gemini: 1h ago</div>
+  <div class="updated">
+    Generated: March 20, 2026 18:16<br/>Scorecard: 1h ago · Gemini: 1h ago
+    <div style="display:flex;gap:6px;justify-content:flex-end;margin-top:8px;">
+      <button class="header-btn" onclick="window.top.location.href='/?action=refresh'">🔄 갱신</button>
+      <button class="header-btn" onclick="window.top.location.href='/?action=force_refresh'">⚡ 강제 갱신</button>
+    </div>
+  </div>
 </header>
 
 <div class="info-bar">

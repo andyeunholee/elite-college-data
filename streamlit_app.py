@@ -17,7 +17,7 @@ try:
 except Exception:
     pass  # 로컬 실행 시 .env 사용
 
-# Remove all Streamlit padding, header, and sidebar
+# Remove all Streamlit chrome
 st.markdown("""
 <style>
     header[data-testid="stHeader"] { display: none !important; }
@@ -35,10 +35,6 @@ st.markdown("""
         width: 100% !important;
         display: block !important;
     }
-    div[data-testid="column"] button {
-        font-size: 0.8rem;
-        padding: 0.25rem 0.5rem;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -54,21 +50,14 @@ def run_generate(force=False):
     return result.returncode == 0, result.stderr
 
 
-# Top-right buttons
-_, col_btn1, col_btn2 = st.columns([7, 1.5, 1.5])
-with col_btn1:
-    refresh_normal = st.button("🔄 데이터 갱신", use_container_width=True,
-                               help="캐시 만료 시만 API 재호출")
-with col_btn2:
-    refresh_force = st.button("⚡ 강제 전체 갱신", use_container_width=True,
-                              help="캐시 무시 전체 재호출 (5~10분 소요)")
-
-if refresh_normal or refresh_force:
+# Handle refresh action from HTML header buttons
+action = st.query_params.get("action", "")
+if action in ("refresh", "force_refresh"):
+    st.query_params.clear()
     with st.spinner("데이터 갱신 중... (약 5~10분 소요)"):
-        ok, err = run_generate(force=refresh_force)
+        ok, err = run_generate(force=(action == "force_refresh"))
     if ok:
         st.session_state.pop("html_content", None)
-        st.success("✅ 갱신 완료!")
         st.rerun()
     else:
         st.error(f"오류: {err}")
