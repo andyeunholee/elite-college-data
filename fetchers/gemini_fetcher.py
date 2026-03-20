@@ -12,8 +12,9 @@ BATCH_SIZE = 15  # colleges per Gemini request (balance speed vs. accuracy)
 
 SYSTEM_PROMPT = """You are a precise college admissions data assistant.
 Return ONLY valid JSON with no markdown, no explanation, no code fences.
-Use null for any field you are not confident about — EXCEPT avg_gpa_weighted, sat_midpoint, act_composite, and acceptance_rate_regular:
-for these four fields always provide your best estimate based on publicly known data. Never return null for them.
+Use null for any field you are not confident about — EXCEPT avg_gpa_weighted, sat_midpoint, act_composite, acceptance_rate_regular, and early_acceptance_rate:
+for these five fields always provide your best estimate based on publicly known data. Never return null for them.
+For early_acceptance_rate: if the school has no early program (has_ed=false AND has_ea=false), return 0. Otherwise always estimate.
 Base your answers on the most recent publicly available data (2024-2025 academic year)."""
 
 def _build_prompt(colleges: list[dict], category: str) -> str:
@@ -37,7 +38,7 @@ Return a JSON array. Each object must have EXACTLY these fields:
 - "has_ea": true or false — does the school offer Early Action?
 - "ed_deadline": string "MM/DD" format (e.g. "11/01"), or null
 - "ea_deadline": string "MM/DD" format (e.g. "11/01"), or null
-- "early_acceptance_rate": float as percentage (e.g. 18.5 means 18.5%), or null
+- "early_acceptance_rate": float as percentage for ED/EA acceptance rate (e.g. 18.5 means 18.5%). Always provide your best estimate. Use 0 only if no early program exists.
 - "defer_policy": true if the school defers early applicants to RD, false if not, null if unknown
 
 Return ONLY the JSON array, nothing else."""
