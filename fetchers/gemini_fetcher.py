@@ -12,8 +12,8 @@ BATCH_SIZE = 15  # colleges per Gemini request (balance speed vs. accuracy)
 
 SYSTEM_PROMPT = """You are a precise college admissions data assistant.
 Return ONLY valid JSON with no markdown, no explanation, no code fences.
-Use null for any field you are not confident about — EXCEPT avg_gpa_weighted, sat_midpoint, act_composite, acceptance_rate_regular, and early_acceptance_rate:
-for these five fields always provide your best estimate based on publicly known data. Never return null for them.
+Use null for any field you are not confident about — EXCEPT avg_gpa_weighted, sat_midpoint, act_composite, acceptance_rate_regular, early_acceptance_rate, total_enrollment, and student_faculty_ratio:
+for these seven fields always provide your best estimate based on publicly known data. Never return null for them.
 For early_acceptance_rate: if the school has no early program (has_ed=false AND has_ea=false), return 0. Otherwise always estimate.
 Base your answers on the most recent publicly available data (2024-2025 academic year)."""
 
@@ -40,6 +40,8 @@ Return a JSON array. Each object must have EXACTLY these fields:
 - "ea_deadline": string "MM/DD" format (e.g. "11/01"), or null
 - "early_acceptance_rate": float as percentage for ED/EA acceptance rate (e.g. 18.5 means 18.5%). Always provide your best estimate. Use 0 only if no early program exists.
 - "defer_policy": true if the school defers early applicants to RD, false if not, null if unknown
+- "total_enrollment": integer, total undergraduate enrollment (e.g. Harvard ~7100, MIT ~4600, Stanford ~7800, UPenn ~10000, Caltech ~938). Always provide your best estimate — do NOT return null.
+- "student_faculty_ratio": integer, student-to-faculty ratio as students per faculty member (e.g. 6 means 6:1). Always provide your best estimate — do NOT return null.
 
 Return ONLY the JSON array, nothing else."""
 
@@ -102,6 +104,8 @@ def fetch_gemini_data(colleges: list[dict], api_key: str, category: str) -> dict
                         "ea_deadline":         entry.get("ea_deadline"),
                         "early_acceptance_rate": entry.get("early_acceptance_rate"),
                         "defer_policy":        entry.get("defer_policy"),
+                        "total_enrollment":    entry.get("total_enrollment"),
+                        "student_faculty_ratio": entry.get("student_faculty_ratio"),
                     }
 
         except Exception as e:
@@ -113,6 +117,7 @@ def fetch_gemini_data(colleges: list[dict], api_key: str, category: str) -> dict
                     "acceptance_rate_regular", "test_policy",
                     "has_ed", "has_ea", "ed_deadline", "ea_deadline",
                     "early_acceptance_rate", "defer_policy",
+                    "total_enrollment", "student_faculty_ratio",
                 ]}
 
         if batch_num < total_batches:
