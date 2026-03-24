@@ -24,9 +24,9 @@ FIELDS = ",".join([
 ])
 
 LOCALE_MAP = {
-    11: "City", 12: "City", 13: "City",
+    11: "Urban", 12: "Urban", 13: "Urban",
     21: "Suburban", 22: "Suburban", 23: "Suburban",
-    31: "Town", 32: "Town", 33: "Town",
+    31: "Suburban", 32: "Rural", 33: "Rural",
     41: "Rural", 42: "Rural", 43: "Rural",
 }
 

@@ -116,7 +116,7 @@ def _merge(college: dict, scorecard: dict, gemini: dict) -> dict:
         "_tuition_ai":      tuition_ai,
         "room_board":       f"${rb:,}" if rb else None,
         "total_tuition":    f"${total:,}" if total else None,
-        "setting":          sc.get("setting"),
+        "setting":          {"City": "Urban", "Town": "Rural"}.get(sc.get("setting"), sc.get("setting")),
         "defer":            "Yes" if defer_raw is True else ("No" if defer_raw is False else None),
     }
 
