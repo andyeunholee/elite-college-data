@@ -50,16 +50,28 @@ def _merge(college: dict, scorecard: dict, gemini: dict) -> dict:
     if act: parts.append(f"ACT {act}")
     sat_act = " / ".join(parts) if parts else None
 
-    # Tuition
-    t_in, t_out = sc.get("tuition_in"), sc.get("tuition_out")
+    # Tuition — Gemini primary (Scorecard often wrong/null for elite schools), Scorecard fallback
+    gm_t_in  = gm.get("tuition_in_state")
+    gm_t_out = gm.get("tuition_out_of_state")
+    gm_rb    = gm.get("room_board")
+    sc_t_in  = sc.get("tuition_in")
+    sc_t_out = sc.get("tuition_out")
+    sc_rb    = sc.get("room_board")
+
+    t_in  = gm_t_in  if gm_t_in  is not None else sc_t_in
+    t_out = gm_t_out if gm_t_out is not None else sc_t_out
+    rb    = gm_rb    if gm_rb    is not None else sc_rb
+    tuition_ai = gm_t_in is not None or gm_t_out is not None
+
     tuition = None
     if t_in and t_out:
         tuition = f"${t_in:,} / ${t_out:,}" if t_in != t_out else f"${t_out:,}"
     elif t_out:
         tuition = f"${t_out:,}"
+    elif t_in:
+        tuition = f"${t_in:,}"
 
-    rb    = sc.get("room_board")
-    total = sc.get("total_tuition")
+    total = (t_out + rb) if (t_out and rb) else sc.get("total_tuition")
 
     # Enrollment — Gemini primary (Scorecard often wrong for elite schools), Scorecard fallback
     gm_enroll = gm.get("total_enrollment")
@@ -101,6 +113,7 @@ def _merge(college: dict, scorecard: dict, gemini: dict) -> dict:
         "ratio":            f"{ratio}:1" if ratio else None,
         "_ratio_ai":        ratio_ai,
         "tuition":          tuition,
+        "_tuition_ai":      tuition_ai,
         "room_board":       f"${rb:,}" if rb else None,
         "total_tuition":    f"${total:,}" if total else None,
         "setting":          sc.get("setting"),

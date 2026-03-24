@@ -12,8 +12,8 @@ BATCH_SIZE = 15  # colleges per Gemini request (balance speed vs. accuracy)
 
 SYSTEM_PROMPT = """You are a precise college admissions data assistant.
 Return ONLY valid JSON with no markdown, no explanation, no code fences.
-Use null for any field you are not confident about — EXCEPT avg_gpa_weighted, sat_midpoint, act_composite, acceptance_rate_regular, early_acceptance_rate, total_enrollment, and student_faculty_ratio:
-for these seven fields always provide your best estimate based on publicly known data. Never return null for them.
+Use null for any field you are not confident about — EXCEPT avg_gpa_weighted, sat_midpoint, act_composite, acceptance_rate_regular, early_acceptance_rate, total_enrollment, student_faculty_ratio, tuition_in_state, tuition_out_of_state, and room_board:
+for these ten fields always provide your best estimate based on publicly known data. Never return null for them.
 For early_acceptance_rate: if the school has no early program (has_ed=false AND has_ea=false), return 0. Otherwise always estimate.
 Base your answers on the most recent publicly available data (2024-2025 academic year)."""
 
@@ -42,6 +42,9 @@ Return a JSON array. Each object must have EXACTLY these fields:
 - "defer_policy": true if the school defers early applicants to RD, false if not, null if unknown
 - "total_enrollment": integer, total undergraduate enrollment (e.g. Harvard ~7100, MIT ~4600, Stanford ~7800, UPenn ~10000, Caltech ~938). Always provide your best estimate — do NOT return null.
 - "student_faculty_ratio": integer, student-to-faculty ratio as students per faculty member (e.g. 6 means 6:1). Always provide your best estimate — do NOT return null.
+- "tuition_in_state": integer, annual in-state undergraduate tuition in USD for 2024-2025 (e.g. UCLA 14312, Michigan 17736). For private schools same as out-of-state tuition. Always provide your best estimate — do NOT return null.
+- "tuition_out_of_state": integer, annual out-of-state undergraduate tuition in USD for 2024-2025 (e.g. UCLA 44066, Michigan 60946). For private schools same as in-state (e.g. Harvard 61676, MIT 62396, UChicago 65440, Caltech 63225). Always provide your best estimate — do NOT return null.
+- "room_board": integer, typical annual on-campus room and board cost in USD for 2024-2025 (e.g. Harvard 21190, MIT 20280, Stanford 21315). Always provide your best estimate — do NOT return null.
 
 Return ONLY the JSON array, nothing else."""
 
@@ -106,6 +109,9 @@ def fetch_gemini_data(colleges: list[dict], api_key: str, category: str) -> dict
                         "defer_policy":        entry.get("defer_policy"),
                         "total_enrollment":    entry.get("total_enrollment"),
                         "student_faculty_ratio": entry.get("student_faculty_ratio"),
+                        "tuition_in_state":    entry.get("tuition_in_state"),
+                        "tuition_out_of_state": entry.get("tuition_out_of_state"),
+                        "room_board":          entry.get("room_board"),
                     }
 
         except Exception as e:
@@ -118,6 +124,7 @@ def fetch_gemini_data(colleges: list[dict], api_key: str, category: str) -> dict
                     "has_ed", "has_ea", "ed_deadline", "ea_deadline",
                     "early_acceptance_rate", "defer_policy",
                     "total_enrollment", "student_faculty_ratio",
+                    "tuition_in_state", "tuition_out_of_state", "room_board",
                 ]}
 
         if batch_num < total_batches:
