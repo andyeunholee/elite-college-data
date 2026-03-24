@@ -627,19 +627,18 @@
       "setting": "City",
       "scorecard_name": "Michigan State University"
     },
-    "University of Maryland, College Park": {},
-    "Boston University": {
-      "enrollment": 18248,
-      "acceptance_rate": 11.1,
-      "sat_total": 1440,
-      "act_midpoint": 33,
-      "tuition_in": 68102,
-      "tuition_out": 68102,
-      "room_board": 19020,
-      "total_tuition": 87122,
+    "Virginia Tech": {
+      "enrollment": 30923,
+      "acceptance_rate": 54.8,
+      "sat_total": 1310,
+      "act_midpoint": 29,
+      "tuition_in": 15948,
+      "tuition_out": 37764,
+      "room_board": 16550,
+      "total_tuition": 54314,
       "faculty_ratio": null,
       "setting": "City",
-      "scorecard_name": "Boston University"
+      "scorecard_name": "Virginia Polytechnic Institute and State University"
     },
     "Case Western Reserve University": {
       "enrollment": 6437,
@@ -653,6 +652,20 @@
       "faculty_ratio": null,
       "setting": "City",
       "scorecard_name": "Case Western Reserve University"
+    },
+    "University of Maryland, College Park": {},
+    "Boston University": {
+      "enrollment": 18248,
+      "acceptance_rate": 11.1,
+      "sat_total": 1440,
+      "act_midpoint": 33,
+      "tuition_in": 68102,
+      "tuition_out": 68102,
+      "room_board": 19020,
+      "total_tuition": 87122,
+      "faculty_ratio": null,
+      "setting": "City",
+      "scorecard_name": "Boston University"
     },
     "Rensselaer Polytechnic Institute": {
       "enrollment": 5714,
@@ -706,18 +719,58 @@
       "setting": "Suburban",
       "scorecard_name": "Villanova University"
     },
-    "Santa Clara University": {
-      "enrollment": 6552,
-      "acceptance_rate": 48.0,
-      "sat_total": 1410,
-      "act_midpoint": 32,
-      "tuition_in": 61293,
-      "tuition_out": 61293,
-      "room_board": 19893,
-      "total_tuition": 81186,
+    "Stony Brook University": {
+      "enrollment": 18101,
+      "acceptance_rate": 49.0,
+      "sat_total": 1390,
+      "act_midpoint": 31,
+      "tuition_in": 10931,
+      "tuition_out": 32741,
+      "room_board": 18196,
+      "total_tuition": 50937,
+      "faculty_ratio": null,
+      "setting": "Suburban",
+      "scorecard_name": "Stony Brook University"
+    },
+    "University of Massachusetts Amherst": {
+      "enrollment": 23671,
+      "acceptance_rate": 59.7,
+      "sat_total": 1355,
+      "act_midpoint": 31,
+      "tuition_in": 17772,
+      "tuition_out": 40449,
+      "room_board": 16710,
+      "total_tuition": 57159,
       "faculty_ratio": null,
       "setting": "City",
-      "scorecard_name": "Santa Clara University"
+      "scorecard_name": "University of Massachusetts-Amherst"
+    },
+    "North Carolina State University": {
+      "enrollment": 27371,
+      "acceptance_rate": 41.7,
+      "sat_total": 1355,
+      "act_midpoint": 30,
+      "tuition_in": 8799,
+      "tuition_out": 32847,
+      "room_board": 14332,
+      "total_tuition": 47179,
+      "faculty_ratio": null,
+      "setting": "City",
+      "scorecard_name": "North Carolina State University at Raleigh"
+    },
+    "University of California, Merced": {},
+    "Brandeis University": {
+      "enrollment": 3618,
+      "acceptance_rate": 40.5,
+      "sat_total": 1450,
+      "act_midpoint": 33,
+      "tuition_in": 68080,
+      "tuition_out": 68080,
+      "room_board": 19944,
+      "total_tuition": 88024,
+      "faculty_ratio": null,
+      "setting": "City",
+      "scorecard_name": "Brandeis University"
     },
     "George Washington University": {
       "enrollment": 11182,
@@ -813,6 +866,58 @@
     "University of California, Davis": {},
     "University of California, San Diego": {},
     "University of California, Irvine": {},
+    "New Jersey Institute of Technology": {
+      "enrollment": 9019,
+      "acceptance_rate": 65.1,
+      "sat_total": 1305,
+      "act_midpoint": 30,
+      "tuition_in": 19974,
+      "tuition_out": 37664,
+      "room_board": 16450,
+      "total_tuition": 54114,
+      "faculty_ratio": null,
+      "setting": "City",
+      "scorecard_name": "New Jersey Institute of Technology"
+    },
+    "Drexel University": {
+      "enrollment": 13233,
+      "acceptance_rate": 79.4,
+      "sat_total": 1310,
+      "act_midpoint": 29,
+      "tuition_in": 62412,
+      "tuition_out": 62412,
+      "room_board": 18096,
+      "total_tuition": 80508,
+      "faculty_ratio": null,
+      "setting": "City",
+      "scorecard_name": "Drexel University"
+    },
+    "Colorado School of Mines": {
+      "enrollment": 6155,
+      "acceptance_rate": 60.7,
+      "sat_total": 1390,
+      "act_midpoint": 31,
+      "tuition_in": 21914,
+      "tuition_out": 45824,
+      "room_board": 17531,
+      "total_tuition": 63355,
+      "faculty_ratio": null,
+      "setting": "Suburban",
+      "scorecard_name": "Colorado School of Mines"
+    },
+    "Santa Clara University": {
+      "enrollment": 6552,
+      "acceptance_rate": 48.0,
+      "sat_total": 1410,
+      "act_midpoint": 32,
+      "tuition_in": 61293,
+      "tuition_out": 61293,
+      "room_board": 19893,
+      "total_tuition": 81186,
+      "faculty_ratio": null,
+      "setting": "City",
+      "scorecard_name": "Santa Clara University"
+    },
     "Marquette University": {
       "enrollment": 7660,
       "acceptance_rate": 81.3,
@@ -825,6 +930,98 @@
       "faculty_ratio": null,
       "setting": "City",
       "scorecard_name": "Marquette University"
+    },
+    "Pepperdine University": {
+      "enrollment": 3553,
+      "acceptance_rate": 62.9,
+      "sat_total": 1350,
+      "act_midpoint": 28,
+      "tuition_in": 69918,
+      "tuition_out": 69918,
+      "room_board": 21750,
+      "total_tuition": 91668,
+      "faculty_ratio": null,
+      "setting": "Suburban",
+      "scorecard_name": "Pepperdine University"
+    },
+    "University of California, Santa Cruz": {},
+    "Worcester Polytechnic Institute": {
+      "enrollment": 5447,
+      "acceptance_rate": 60.2,
+      "sat_total": null,
+      "act_midpoint": null,
+      "tuition_in": 60965,
+      "tuition_out": 60965,
+      "room_board": 18386,
+      "total_tuition": 79351,
+      "faculty_ratio": null,
+      "setting": "City",
+      "scorecard_name": "Worcester Polytechnic Institute"
+    },
+    "Howard University": {
+      "enrollment": 10108,
+      "acceptance_rate": 41.3,
+      "sat_total": 1185,
+      "act_midpoint": 24,
+      "tuition_in": 35810,
+      "tuition_out": 35810,
+      "room_board": 17322,
+      "total_tuition": 53132,
+      "faculty_ratio": null,
+      "setting": "City",
+      "scorecard_name": "Howard University"
+    },
+    "University of Delaware": {
+      "enrollment": 4398,
+      "acceptance_rate": 46.6,
+      "sat_total": null,
+      "act_midpoint": null,
+      "tuition_in": 10670,
+      "tuition_out": 20634,
+      "room_board": 16664,
+      "total_tuition": 37298,
+      "faculty_ratio": null,
+      "setting": "City",
+      "scorecard_name": "Delaware State University"
+    },
+    "Rochester Institute of Technology": {
+      "enrollment": 13215,
+      "acceptance_rate": 66.9,
+      "sat_total": 1360,
+      "act_midpoint": 31,
+      "tuition_in": 59274,
+      "tuition_out": 59274,
+      "room_board": 16142,
+      "total_tuition": 75416,
+      "faculty_ratio": null,
+      "setting": "Suburban",
+      "scorecard_name": "Rochester Institute of Technology"
+    },
+    "Southern Methodist University": {
+      "enrollment": 7277,
+      "acceptance_rate": 63.3,
+      "sat_total": 1425,
+      "act_midpoint": 33,
+      "tuition_in": 67040,
+      "tuition_out": 67040,
+      "room_board": 19064,
+      "total_tuition": 86104,
+      "faculty_ratio": null,
+      "setting": "Suburban",
+      "scorecard_name": "Southern Methodist University"
+    },
+    "University of South Florida": {
+      "enrollment": 37207,
+      "acceptance_rate": 43.2,
+      "sat_total": 1235,
+      "act_midpoint": 27,
+      "tuition_in": 6410,
+      "tuition_out": 17324,
+      "room_board": 14440,
+      "total_tuition": 31764,
+      "faculty_ratio": null,
+      "setting": "City",
+      "scorecard_name": "University of South Florida"
     },
     "American University": {
       "enrollment": 7266,
@@ -839,18 +1036,18 @@
       "setting": "City",
       "scorecard_name": "American University"
     },
-    "Pepperdine University": {
-      "enrollment": 3553,
-      "acceptance_rate": 62.9,
-      "sat_total": 1350,
-      "act_midpoint": 28,
-      "tuition_in": 69918,
-      "tuition_out": 69918,
-      "room_board": 21750,
-      "total_tuition": 91668,
+    "Loyola Marymount University": {
+      "enrollment": 7094,
+      "acceptance_rate": 45.1,
+      "sat_total": 1335,
+      "act_midpoint": 30,
+      "tuition_in": 62357,
+      "tuition_out": 62357,
+      "room_board": 22026,
+      "total_tuition": 84383,
       "faculty_ratio": null,
-      "setting": "Suburban",
-      "scorecard_name": "Pepperdine University"
+      "setting": "City",
+      "scorecard_name": "Loyola Marymount University"
     },
     "University of Denver": {
       "enrollment": 10519,
@@ -917,19 +1114,6 @@
       "setting": "City",
       "scorecard_name": "University of Minnesota-Twin Cities"
     },
-    "Virginia Tech": {
-      "enrollment": 30923,
-      "acceptance_rate": 54.8,
-      "sat_total": 1310,
-      "act_midpoint": 29,
-      "tuition_in": 15948,
-      "tuition_out": 37764,
-      "room_board": 16550,
-      "total_tuition": 54314,
-      "faculty_ratio": null,
-      "setting": "City",
-      "scorecard_name": "Virginia Polytechnic Institute and State University"
-    },
     "Rutgers University-New Brunswick": {
       "enrollment": 37751,
       "acceptance_rate": 58.1,
@@ -956,45 +1140,6 @@
       "setting": "City",
       "scorecard_name": "University of Iowa"
     },
-    "University of Alabama": {
-      "enrollment": 6591,
-      "acceptance_rate": 68.6,
-      "sat_total": 1295,
-      "act_midpoint": 28,
-      "tuition_in": 12132,
-      "tuition_out": 26408,
-      "room_board": 12428,
-      "total_tuition": 38836,
-      "faculty_ratio": null,
-      "setting": "City",
-      "scorecard_name": "University of Alabama in Huntsville"
-    },
-    "Brigham Young University": {
-      "enrollment": 32952,
-      "acceptance_rate": 67.8,
-      "sat_total": 1330,
-      "act_midpoint": 29,
-      "tuition_in": 6688,
-      "tuition_out": 6688,
-      "room_board": 10396,
-      "total_tuition": 17084,
-      "faculty_ratio": null,
-      "setting": "City",
-      "scorecard_name": "Brigham Young University"
-    },
-    "University of Missouri": {
-      "enrollment": 3019,
-      "acceptance_rate": 97.0,
-      "sat_total": 1060,
-      "act_midpoint": 21,
-      "tuition_in": 8960,
-      "tuition_out": 17080,
-      "room_board": 9119,
-      "total_tuition": 26199,
-      "faculty_ratio": null,
-      "setting": "City",
-      "scorecard_name": "Missouri Southern State University"
-    },
     "University of Colorado Boulder": {
       "enrollment": 31939,
       "acceptance_rate": 78.1,
@@ -1007,84 +1152,6 @@
       "faculty_ratio": null,
       "setting": "City",
       "scorecard_name": "University of Colorado Boulder"
-    },
-    "Arizona State University": {
-      "enrollment": null,
-      "acceptance_rate": null,
-      "sat_total": null,
-      "act_midpoint": null,
-      "tuition_in": null,
-      "tuition_out": null,
-      "room_board": null,
-      "total_tuition": null,
-      "faculty_ratio": null,
-      "setting": "N/A",
-      "scorecard_name": "Arizona State University - Northeastern Arizona"
-    },
-    "University of Arizona": {
-      "enrollment": 42537,
-      "acceptance_rate": 86.1,
-      "sat_total": 1245,
-      "act_midpoint": 25,
-      "tuition_in": 13926,
-      "tuition_out": 42278,
-      "room_board": 16746,
-      "total_tuition": 59024,
-      "faculty_ratio": null,
-      "setting": "City",
-      "scorecard_name": "University of Arizona"
-    },
-    "Howard University": {
-      "enrollment": 10108,
-      "acceptance_rate": 41.3,
-      "sat_total": 1185,
-      "act_midpoint": 24,
-      "tuition_in": 35810,
-      "tuition_out": 35810,
-      "room_board": 17322,
-      "total_tuition": 53132,
-      "faculty_ratio": null,
-      "setting": "City",
-      "scorecard_name": "Howard University"
-    },
-    "University of Vermont": {
-      "enrollment": 3590,
-      "acceptance_rate": 81.7,
-      "sat_total": null,
-      "act_midpoint": null,
-      "tuition_in": 11952,
-      "tuition_out": 22296,
-      "room_board": 13618,
-      "total_tuition": 35914,
-      "faculty_ratio": null,
-      "setting": "Rural",
-      "scorecard_name": "Vermont State University"
-    },
-    "Worcester Polytechnic Institute": {
-      "enrollment": 5447,
-      "acceptance_rate": 60.2,
-      "sat_total": null,
-      "act_midpoint": null,
-      "tuition_in": 60965,
-      "tuition_out": 60965,
-      "room_board": 18386,
-      "total_tuition": 79351,
-      "faculty_ratio": null,
-      "setting": "City",
-      "scorecard_name": "Worcester Polytechnic Institute"
-    },
-    "Stony Brook University": {
-      "enrollment": 18101,
-      "acceptance_rate": 49.0,
-      "sat_total": 1390,
-      "act_midpoint": 31,
-      "tuition_in": 10931,
-      "tuition_out": 32741,
-      "room_board": 18196,
-      "total_tuition": 50937,
-      "faculty_ratio": null,
-      "setting": "Suburban",
-      "scorecard_name": "Stony Brook University"
     },
     "University at Buffalo": {
       "enrollment": 20112,
@@ -1099,32 +1166,6 @@
       "setting": "Suburban",
       "scorecard_name": "University at Buffalo"
     },
-    "University of Oregon": {
-      "enrollment": 836,
-      "acceptance_rate": null,
-      "sat_total": null,
-      "act_midpoint": null,
-      "tuition_in": null,
-      "tuition_out": null,
-      "room_board": null,
-      "total_tuition": null,
-      "faculty_ratio": null,
-      "setting": "City",
-      "scorecard_name": "Oregon Health & Science University"
-    },
-    "Colorado State University": {
-      "enrollment": 25538,
-      "acceptance_rate": 88.5,
-      "sat_total": 1185,
-      "act_midpoint": 26,
-      "tuition_in": 13373,
-      "tuition_out": 34783,
-      "room_board": 16817,
-      "total_tuition": 51600,
-      "faculty_ratio": null,
-      "setting": "City",
-      "scorecard_name": "Colorado State University-Fort Collins"
-    },
     "University of Utah": {
       "enrollment": 823,
       "acceptance_rate": 66.6,
@@ -1137,71 +1178,6 @@
       "faculty_ratio": null,
       "setting": "City",
       "scorecard_name": "Westminster University"
-    },
-    "Drexel University": {
-      "enrollment": 13233,
-      "acceptance_rate": 79.4,
-      "sat_total": 1310,
-      "act_midpoint": 29,
-      "tuition_in": 62412,
-      "tuition_out": 62412,
-      "room_board": 18096,
-      "total_tuition": 80508,
-      "faculty_ratio": null,
-      "setting": "City",
-      "scorecard_name": "Drexel University"
-    },
-    "Colorado School of Mines": {
-      "enrollment": 6155,
-      "acceptance_rate": 60.7,
-      "sat_total": 1390,
-      "act_midpoint": 31,
-      "tuition_in": 21914,
-      "tuition_out": 45824,
-      "room_board": 17531,
-      "total_tuition": 63355,
-      "faculty_ratio": null,
-      "setting": "Suburban",
-      "scorecard_name": "Colorado School of Mines"
-    },
-    "University of Delaware": {
-      "enrollment": 4398,
-      "acceptance_rate": 46.6,
-      "sat_total": null,
-      "act_midpoint": null,
-      "tuition_in": 10670,
-      "tuition_out": 20634,
-      "room_board": 16664,
-      "total_tuition": 37298,
-      "faculty_ratio": null,
-      "setting": "City",
-      "scorecard_name": "Delaware State University"
-    },
-    "Seton Hall University": {
-      "enrollment": 6036,
-      "acceptance_rate": 73.3,
-      "sat_total": 1285,
-      "act_midpoint": 29,
-      "tuition_in": 53170,
-      "tuition_out": 53170,
-      "room_board": 17970,
-      "total_tuition": 71140,
-      "faculty_ratio": null,
-      "setting": "Suburban",
-      "scorecard_name": "Seton Hall University"
-    },
-    "James Madison University": {
-      "enrollment": 20888,
-      "acceptance_rate": 71.5,
-      "sat_total": 1225,
-      "act_midpoint": 27,
-      "tuition_in": 14250,
-      "tuition_out": 31604,
-      "room_board": 13056,
-      "total_tuition": 44660,
-      "faculty_ratio": null,
-      "setting": "City",
-      "scorecard_name": "James Madison University"
     },
     "University of Tennessee": {
       "enrollment": 8698,
@@ -1216,18 +1192,31 @@
       "setting": "Town",
       "scorecard_name": "Tennessee Technological University"
     },
-    "University of South Carolina": {
-      "enrollment": 2962,
-      "acceptance_rate": 78.5,
-      "sat_total": 1065,
-      "act_midpoint": 20,
-      "tuition_in": 10760,
-      "tuition_out": 21218,
-      "room_board": 9182,
-      "total_tuition": 30400,
+    "Gonzaga University": {
+      "enrollment": 5198,
+      "acceptance_rate": 81.7,
+      "sat_total": 1295,
+      "act_midpoint": 29,
+      "tuition_in": 55480,
+      "tuition_out": 55480,
+      "room_board": 15730,
+      "total_tuition": 71210,
+      "faculty_ratio": null,
+      "setting": "City",
+      "scorecard_name": "Gonzaga University"
+    },
+    "Florida International University": {
+      "enrollment": 39508,
+      "acceptance_rate": 54.7,
+      "sat_total": 1150,
+      "act_midpoint": 24,
+      "tuition_in": 6565,
+      "tuition_out": 18964,
+      "room_board": 13080,
+      "total_tuition": 32044,
       "faculty_ratio": null,
       "setting": "Suburban",
-      "scorecard_name": "University of South Carolina Aiken"
+      "scorecard_name": "Florida International University"
     },
     "Yeshiva University": {
       "enrollment": 2852,
@@ -1243,5 +1232,5 @@
       "scorecard_name": "Yeshiva University"
     }
   },
-  "cached_at": "2026-03-24T18:12:36.648631"
+  "cached_at": "2026-03-24T18:41:36.296504"
 }

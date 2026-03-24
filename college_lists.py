@@ -3,108 +3,119 @@
 # school name + state are used to look up College Scorecard data
 
 NATIONAL_UNIVERSITIES = [
-    {"name": "Princeton University",                          "state": "NJ"},
-    {"name": "Massachusetts Institute of Technology",         "state": "MA"},
-    {"name": "Harvard University",                            "state": "MA"},
-    {"name": "Stanford University",                           "state": "CA"},
-    {"name": "Yale University",                               "state": "CT"},
-    {"name": "University of Chicago",                         "state": "IL"},
-    {"name": "Johns Hopkins University",                      "state": "MD"},
-    {"name": "University of Pennsylvania",                    "state": "PA"},
-    {"name": "California Institute of Technology",            "state": "CA"},
-    {"name": "Duke University",                               "state": "NC"},
-    {"name": "Dartmouth College",                             "state": "NH"},
-    {"name": "Northwestern University",                       "state": "IL"},
-    {"name": "Brown University",                              "state": "RI"},
-    {"name": "Vanderbilt University",                         "state": "TN"},
-    {"name": "Columbia University",                           "state": "NY"},
-    {"name": "Cornell University",                            "state": "NY"},
-    {"name": "Rice University",                               "state": "TX"},
-    {"name": "Washington University in St. Louis",            "state": "MO"},
-    {"name": "University of Notre Dame",                      "state": "IN"},
-    {"name": "University of California, Los Angeles",         "state": "CA"},
-    {"name": "Emory University",                              "state": "GA"},
-    {"name": "University of California, Berkeley",            "state": "CA"},
-    {"name": "Georgetown University",                         "state": "DC"},
-    {"name": "Carnegie Mellon University",                    "state": "PA"},
-    {"name": "University of Michigan-Ann Arbor",              "state": "MI"},
-    {"name": "University of North Carolina at Chapel Hill",   "state": "NC"},
-    {"name": "University of Virginia",                        "state": "VA"},
-    {"name": "University of Southern California",             "state": "CA"},
-    {"name": "Tufts University",                              "state": "MA"},
-    {"name": "New York University",                           "state": "NY"},
-    {"name": "University of California, Santa Barbara",       "state": "CA"},
-    {"name": "University of Florida",                         "state": "FL"},
-    {"name": "Georgia Institute of Technology",               "state": "GA"},
-    {"name": "University of Rochester",                       "state": "NY"},
-    {"name": "Boston College",                                "state": "MA"},
-    {"name": "Wake Forest University",                        "state": "NC"},
-    {"name": "Lehigh University",                             "state": "PA"},
-    {"name": "Northeastern University",                       "state": "MA"},
-    {"name": "William & Mary",                                "state": "VA"},
-    {"name": "University of Georgia",                         "state": "GA"},
-    {"name": "University of Wisconsin-Madison",               "state": "WI"},
-    {"name": "Tulane University",                             "state": "LA"},
-    {"name": "University of Illinois Urbana-Champaign",       "state": "IL"},
-    {"name": "Purdue University",                             "state": "IN"},
-    {"name": "Ohio State University",                         "state": "OH"},
-    {"name": "Pennsylvania State University",                 "state": "PA"},
-    {"name": "Texas A&M University",                          "state": "TX"},
-    {"name": "University of Texas at Austin",                 "state": "TX"},
-    {"name": "Indiana University Bloomington",                "state": "IN"},
-    {"name": "University of Washington",                      "state": "WA"},
-    {"name": "Michigan State University",                     "state": "MI"},
-    {"name": "University of Maryland, College Park",          "state": "MD"},
-    {"name": "Boston University",                             "state": "MA"},
-    {"name": "Case Western Reserve University",               "state": "OH"},
-    {"name": "Rensselaer Polytechnic Institute",              "state": "NY"},
-    {"name": "University of Pittsburgh",                      "state": "PA"},
-    {"name": "Florida State University",                      "state": "FL"},
-    {"name": "Villanova University",                          "state": "PA"},
-    {"name": "Santa Clara University",                        "state": "CA"},
-    {"name": "George Washington University",                  "state": "DC"},
-    {"name": "Fordham University",                            "state": "NY"},
-    {"name": "University of Miami",                           "state": "FL"},
-    {"name": "Syracuse University",                           "state": "NY"},
-    {"name": "Stevens Institute of Technology",               "state": "NJ"},
-    {"name": "University of Connecticut",                     "state": "CT"},
-    {"name": "Clemson University",                            "state": "SC"},
-    {"name": "University of California, Davis",               "state": "CA"},
-    {"name": "University of California, San Diego",           "state": "CA"},
-    {"name": "University of California, Irvine",              "state": "CA"},
-    {"name": "Marquette University",                          "state": "WI"},
-    {"name": "American University",                           "state": "DC"},
-    {"name": "Pepperdine University",                         "state": "CA"},
-    {"name": "University of Denver",                          "state": "CO"},
-    {"name": "Baylor University",                             "state": "TX"},
-    {"name": "Loyola University Chicago",                     "state": "IL"},
-    {"name": "Texas Christian University",                    "state": "TX"},
-    {"name": "University of Minnesota Twin Cities",           "state": "MN"},
-    {"name": "Virginia Tech",                                 "state": "VA"},
-    {"name": "Rutgers University-New Brunswick",              "state": "NJ"},
-    {"name": "University of Iowa",                            "state": "IA"},
-    {"name": "University of Alabama",                         "state": "AL"},
-    {"name": "Brigham Young University",                      "state": "UT"},
-    {"name": "University of Missouri",                        "state": "MO"},
-    {"name": "University of Colorado Boulder",                "state": "CO"},
-    {"name": "Arizona State University",                      "state": "AZ"},
-    {"name": "University of Arizona",                         "state": "AZ"},
-    {"name": "Howard University",                             "state": "DC"},
-    {"name": "University of Vermont",                         "state": "VT"},
-    {"name": "Worcester Polytechnic Institute",               "state": "MA"},
-    {"name": "Stony Brook University",                        "state": "NY"},
-    {"name": "University at Buffalo",                         "state": "NY"},
-    {"name": "University of Oregon",                          "state": "OR"},
-    {"name": "Colorado State University",                     "state": "CO"},
-    {"name": "University of Utah",                            "state": "UT"},
-    {"name": "Drexel University",                             "state": "PA"},
-    {"name": "Colorado School of Mines",                      "state": "CO"},
-    {"name": "University of Delaware",                        "state": "DE"},
-    {"name": "Seton Hall University",                         "state": "NJ"},
-    {"name": "James Madison University",                      "state": "VA"},
-    {"name": "University of Tennessee",                       "state": "TN"},
-    {"name": "University of South Carolina",                  "state": "SC"},
-    {"name": "Yeshiva University",                            "state": "NY"},
+    # ── Top 10 ──────────────────────────────────────────────────────────────
+    {"name": "Princeton University",                          "state": "NJ"},   # #1
+    {"name": "Massachusetts Institute of Technology",         "state": "MA"},   # #2
+    {"name": "Harvard University",                            "state": "MA"},   # #3
+    {"name": "Stanford University",                           "state": "CA"},   # #3
+    {"name": "Yale University",                               "state": "CT"},   # #5
+    {"name": "University of Chicago",                         "state": "IL"},   # #6
+    {"name": "Johns Hopkins University",                      "state": "MD"},   # #7
+    {"name": "University of Pennsylvania",                    "state": "PA"},   # #7
+    {"name": "California Institute of Technology",            "state": "CA"},   # #9
+    {"name": "Duke University",                               "state": "NC"},   # #9
+    # ── 11–20 ───────────────────────────────────────────────────────────────
+    {"name": "Dartmouth College",                             "state": "NH"},   # #11
+    {"name": "Northwestern University",                       "state": "IL"},   # #11
+    {"name": "Brown University",                              "state": "RI"},   # #13
+    {"name": "Vanderbilt University",                         "state": "TN"},   # #13
+    {"name": "Columbia University",                           "state": "NY"},   # #13
+    {"name": "Cornell University",                            "state": "NY"},   # #16
+    {"name": "Rice University",                               "state": "TX"},   # #17
+    {"name": "Washington University in St. Louis",            "state": "MO"},   # #18
+    {"name": "University of Notre Dame",                      "state": "IN"},   # #19
+    {"name": "University of California, Los Angeles",         "state": "CA"},   # #20
+    # ── 21–30 ───────────────────────────────────────────────────────────────
+    {"name": "Emory University",                              "state": "GA"},   # #21
+    {"name": "University of California, Berkeley",            "state": "CA"},   # #22
+    {"name": "Georgetown University",                         "state": "DC"},   # #23
+    {"name": "Carnegie Mellon University",                    "state": "PA"},   # #24
+    {"name": "University of Michigan-Ann Arbor",              "state": "MI"},   # #25
+    {"name": "University of North Carolina at Chapel Hill",   "state": "NC"},   # #26
+    {"name": "University of Virginia",                        "state": "VA"},   # #27
+    {"name": "University of Southern California",             "state": "CA"},   # #27
+    {"name": "Tufts University",                              "state": "MA"},   # #29
+    {"name": "New York University",                           "state": "NY"},   # #30
+    # ── 31–40 ───────────────────────────────────────────────────────────────
+    {"name": "University of California, Santa Barbara",       "state": "CA"},   # #30
+    {"name": "University of Florida",                         "state": "FL"},   # #32
+    {"name": "Georgia Institute of Technology",               "state": "GA"},   # #33
+    {"name": "University of Rochester",                       "state": "NY"},   # #33
+    {"name": "Boston College",                                "state": "MA"},   # #35
+    {"name": "Wake Forest University",                        "state": "NC"},   # #35
+    {"name": "Lehigh University",                             "state": "PA"},   # #37
+    {"name": "Northeastern University",                       "state": "MA"},   # #49 (tied)
+    {"name": "William & Mary",                                "state": "VA"},   # #44 (tied)
+    {"name": "University of Georgia",                         "state": "GA"},   # #44 (tied)
+    # ── 41–50 ───────────────────────────────────────────────────────────────
+    {"name": "University of Wisconsin-Madison",               "state": "WI"},   # #41
+    {"name": "Tulane University",                             "state": "LA"},   # #42
+    {"name": "University of Illinois Urbana-Champaign",       "state": "IL"},   # #43
+    {"name": "Purdue University",                             "state": "IN"},   # #44
+    {"name": "Ohio State University",                         "state": "OH"},   # #45
+    {"name": "Pennsylvania State University",                 "state": "PA"},   # #46
+    {"name": "Texas A&M University",                          "state": "TX"},   # #47
+    {"name": "University of Texas at Austin",                 "state": "TX"},   # #48
+    {"name": "Indiana University Bloomington",                "state": "IN"},   # #49
+    {"name": "University of Washington",                      "state": "WA"},   # #50
+    # ── 51–60 ───────────────────────────────────────────────────────────────
+    {"name": "Michigan State University",                     "state": "MI"},   # #51 (tied)
+    {"name": "Virginia Tech",                                 "state": "VA"},   # #51 (tied)
+    {"name": "Case Western Reserve University",               "state": "OH"},   # #51 (tied)
+    {"name": "University of Maryland, College Park",          "state": "MD"},   # #54 (tied)
+    {"name": "Boston University",                             "state": "MA"},   # #54 (tied)
+    {"name": "Rensselaer Polytechnic Institute",              "state": "NY"},   # ~#55
+    {"name": "University of Pittsburgh",                      "state": "PA"},   # #56
+    {"name": "Florida State University",                      "state": "FL"},   # #57
+    {"name": "Villanova University",                          "state": "PA"},   # #58 (tied)
+    {"name": "Stony Brook University",                        "state": "NY"},   # #58 (tied)
+    # ── 61–70 ───────────────────────────────────────────────────────────────
+    {"name": "University of Massachusetts Amherst",           "state": "MA"},   # #58 (tied) ★ added
+    {"name": "North Carolina State University",               "state": "NC"},   # #58 (tied) ★ added
+    {"name": "University of California, Merced",              "state": "CA"},   # #58 (tied) ★ added
+    {"name": "Brandeis University",                           "state": "MA"},   # #63 (tied) ★ added
+    {"name": "George Washington University",                  "state": "DC"},   # #63 (tied)
+    {"name": "Fordham University",                            "state": "NY"},   # #63 (tied)
+    {"name": "University of Miami",                           "state": "FL"},   # #63 (tied)
+    {"name": "Syracuse University",                           "state": "NY"},   # #63 (tied)
+    {"name": "Stevens Institute of Technology",               "state": "NJ"},   # #74 (tied)
+    {"name": "University of Connecticut",                     "state": "CT"},   # ~#65
+    # ── 71–80 ───────────────────────────────────────────────────────────────
+    {"name": "Clemson University",                            "state": "SC"},   # ~#66
+    {"name": "University of California, Davis",               "state": "CA"},   # ~#67
+    {"name": "University of California, San Diego",           "state": "CA"},   # ~#68
+    {"name": "University of California, Irvine",              "state": "CA"},   # ~#69
+    {"name": "New Jersey Institute of Technology",            "state": "NJ"},   # #74 (tied) ★ added
+    {"name": "Drexel University",                             "state": "PA"},   # #74 (tied)
+    {"name": "Colorado School of Mines",                      "state": "CO"},   # #74 (tied)
+    {"name": "Santa Clara University",                        "state": "CA"},   # ~#74
+    {"name": "Marquette University",                          "state": "WI"},   # #88 (tied)
+    {"name": "Pepperdine University",                         "state": "CA"},   # #84 (tied)
+    # ── 81–90 ───────────────────────────────────────────────────────────────
+    {"name": "University of California, Santa Cruz",          "state": "CA"},   # #84 (tied) ★ added
+    {"name": "Worcester Polytechnic Institute",               "state": "MA"},   # #84 (tied)
+    {"name": "Howard University",                             "state": "DC"},   # #86 (tied)
+    {"name": "University of Delaware",                        "state": "DE"},   # #86 (tied)
+    {"name": "Rochester Institute of Technology",             "state": "NY"},   # #88 (tied) ★ added
+    {"name": "Southern Methodist University",                 "state": "TX"},   # #88 (tied) ★ added
+    {"name": "University of South Florida",                   "state": "FL"},   # #88 (tied) ★ added
+    {"name": "American University",                           "state": "DC"},   # #91 (tied)
+    {"name": "Loyola Marymount University",                   "state": "CA"},   # #91 (tied) ★ added
+    {"name": "University of Denver",                          "state": "CO"},   # ~#91
+    # ── 91–103 (ties extend beyond 100) ─────────────────────────────────────
+    {"name": "Baylor University",                             "state": "TX"},   # ~#91
+    {"name": "Loyola University Chicago",                     "state": "IL"},   # ~#91
+    {"name": "Texas Christian University",                    "state": "TX"},   # ~#91
+    {"name": "University of Minnesota Twin Cities",           "state": "MN"},   # ~#91
+    {"name": "Rutgers University-New Brunswick",              "state": "NJ"},   # ~#95
+    {"name": "University of Iowa",                            "state": "IA"},   # #98 (tied)
+    {"name": "University of Colorado Boulder",                "state": "CO"},   # ~#97
+    {"name": "University at Buffalo",                         "state": "NY"},   # ~#97
+    {"name": "University of Utah",                            "state": "UT"},   # ~#97
+    {"name": "University of Tennessee",                       "state": "TN"},   # ~#97
+    {"name": "Gonzaga University",                            "state": "WA"},   # #98 (tied) ★ added
+    {"name": "Florida International University",              "state": "FL"},   # #98 (tied) ★ added
+    {"name": "Yeshiva University",                            "state": "NY"},   # ~#100
 ]
 
 LIBERAL_ARTS_COLLEGES = [
