@@ -35,6 +35,7 @@ NATIONAL_UNIVERSITIES = [
     {"name": "New York University",                           "state": "NY"},
     {"name": "University of California, Santa Barbara",       "state": "CA"},
     {"name": "University of Florida",                         "state": "FL"},
+    {"name": "Georgia Institute of Technology",               "state": "GA"},
     {"name": "University of Rochester",                       "state": "NY"},
     {"name": "Boston College",                                "state": "MA"},
     {"name": "Wake Forest University",                        "state": "NC"},
@@ -202,10 +203,8 @@ LIBERAL_ARTS_COLLEGES = [
     {"name": "Hiram College",                                 "state": "OH"},
     {"name": "Pacific Lutheran University",                   "state": "WA"},
     {"name": "Covenant College",                              "state": "GA"},
-    {"name": "Hampden-Sydney College",                        "state": "VA"},
     {"name": "Monmouth College",                              "state": "IL"},
     {"name": "Drew University",                               "state": "NJ"},
     {"name": "Muskingum University",                          "state": "OH"},
     {"name": "Albion College",                                "state": "MI"},
-    {"name": "Occidental College",                            "state": "CA"},
 ]
