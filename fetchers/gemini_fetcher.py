@@ -34,11 +34,13 @@ Return a JSON array. Each object must have EXACTLY these fields:
 - "act_composite": integer, ACT composite midpoint score of admitted freshmen (e.g. 34). Use widely known figures. Always provide your best estimate — do NOT return null.
 - "acceptance_rate_regular": float as percentage, overall (Regular Decision) acceptance rate (e.g. 3.5 means 3.5%). Use the most recent published figures. Always provide your best estimate — do NOT return null.
 - "test_policy": one of "Required", "Optional", "Blind", or null
-- "has_ed": true or false — does the school offer Early Decision?
-- "has_ea": true or false — does the school offer Early Action?
+- "has_ed": true or false — does the school offer Early Decision (binding)?
+- "has_ea": true or false — does the school offer NON-restrictive Early Action (applicants may simultaneously apply ED/REA elsewhere)? Examples: MIT, UMich, UVA, UChicago (also has ED).
+- "has_rea": true or false — does the school offer Restrictive Early Action / Single-Choice Early Action (non-binding but applicants generally cannot apply ED or REA to other private schools simultaneously)? Examples: Harvard (SCEA), Princeton (REA), Yale (REA), Stanford (REA), Notre Dame (REA). IMPORTANT: has_rea=true means has_ed and has_ea should both be false.
 - "ed_deadline": string "MM/DD" format (e.g. "11/01"), or null
 - "ea_deadline": string "MM/DD" format (e.g. "11/01"), or null
-- "early_acceptance_rate": float as percentage for ED/EA acceptance rate (e.g. 18.5 means 18.5%). Always provide your best estimate. Use 0 only if no early program exists.
+- "rea_deadline": string "MM/DD" format for Restrictive Early Action deadline (e.g. "11/01"), or null
+- "early_acceptance_rate": float as percentage for ED/EA/REA acceptance rate (e.g. 18.5 means 18.5%). Always provide your best estimate. Use 0 only if no early program exists.
 - "defer_policy": true if the school defers early applicants to RD, false if not, null if unknown
 - "total_enrollment": integer, total undergraduate enrollment (e.g. Harvard ~7100, MIT ~4600, Stanford ~7800, UPenn ~10000, Caltech ~938). Always provide your best estimate — do NOT return null.
 - "student_faculty_ratio": integer, student-to-faculty ratio as students per faculty member (e.g. 6 means 6:1). Always provide your best estimate — do NOT return null.
@@ -103,8 +105,10 @@ def fetch_gemini_data(colleges: list[dict], api_key: str, category: str) -> dict
                         "test_policy":            entry.get("test_policy"),
                         "has_ed":              entry.get("has_ed"),
                         "has_ea":              entry.get("has_ea"),
+                        "has_rea":             entry.get("has_rea"),
                         "ed_deadline":         entry.get("ed_deadline"),
                         "ea_deadline":         entry.get("ea_deadline"),
+                        "rea_deadline":        entry.get("rea_deadline"),
                         "early_acceptance_rate": entry.get("early_acceptance_rate"),
                         "defer_policy":        entry.get("defer_policy"),
                         "total_enrollment":    entry.get("total_enrollment"),
@@ -121,7 +125,7 @@ def fetch_gemini_data(colleges: list[dict], api_key: str, category: str) -> dict
                 results[c["name"]] = {k: None for k in [
                     "us_news_rank", "avg_gpa_weighted", "sat_midpoint", "act_composite",
                     "acceptance_rate_regular", "test_policy",
-                    "has_ed", "has_ea", "ed_deadline", "ea_deadline",
+                    "has_ed", "has_ea", "has_rea", "ed_deadline", "ea_deadline", "rea_deadline",
                     "early_acceptance_rate", "defer_policy",
                     "total_enrollment", "student_faculty_ratio",
                     "tuition_in_state", "tuition_out_of_state", "room_board",

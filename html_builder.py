@@ -156,6 +156,7 @@ tbody td { padding: .45rem .5rem; vertical-align: middle; white-space: nowrap; }
 .pill-bld  { background:#198754; color:#fff; }
 .pill-ed   { background:#6f42c1; color:#fff; margin-right:2px; }
 .pill-ea   { background:#fd7e14; color:#fff; }
+.pill-rea  { background:#20c997; color:#fff; }
 .pill-rd   { background:#adb5bd; color:#fff; }
 .defer-yes { color:#dc3545; font-weight:700; }
 .defer-no  { color:#198754; font-weight:700; }
@@ -205,8 +206,10 @@ def _test_pill(policy):
     return p
 
 
-def _edea_pill(has_ed, has_ea):
+def _edea_pill(has_ed, has_ea, has_rea):
     parts = []
+    if has_rea:
+        parts.append('<span class="pill pill-rea">REA</span>')
     if has_ed:
         parts.append('<span class="pill pill-ed">ED</span>')
     if has_ea:
@@ -235,15 +238,19 @@ def _build_row(r: dict, num: int = 0) -> str:
     gpa_raw = r.get("_gpa_raw")
     gpa_disp = f"{gpa_raw:.2f} ★" if gpa_raw else None
 
-    # ED/EA cells
-    has_ed = r.get("_has_ed", False)
-    has_ea = r.get("_has_ea", False)
-    edea_html = _edea_pill(has_ed, has_ea)
+    # ED/EA/REA cells
+    has_ed  = r.get("_has_ed",  False)
+    has_ea  = r.get("_has_ea",  False)
+    has_rea = r.get("_has_rea", False)
+    edea_html = _edea_pill(has_ed, has_ea, has_rea)
 
     # Due date (AI)
     ed_dl  = r.get("_ed_deadline")
     ea_dl  = r.get("_ea_deadline")
+    rea_dl = r.get("_rea_deadline")
     due_parts = []
+    if has_rea and rea_dl:
+        due_parts.append(f"REA: {rea_dl}")
     if has_ed and ed_dl:
         due_parts.append(f"ED: {ed_dl}")
     if has_ea and ea_dl:
