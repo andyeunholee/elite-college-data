@@ -98,7 +98,7 @@ def _merge(college: dict, scorecard: dict, gemini: dict) -> dict:
         "state":            state,
         "_rank_raw":        gm.get("us_news_rank"),
         "_gpa_raw":         gm.get("avg_gpa_weighted"),
-        "_test_policy_raw": gm.get("test_policy"),
+        "_test_policy_raw": college.get("test_policy") or gm.get("test_policy"),
         "_has_ed":          bool(gm.get("has_ed")),
         "_has_ea":          bool(gm.get("has_ea")),
         "_has_rea":         bool(gm.get("has_rea")),
