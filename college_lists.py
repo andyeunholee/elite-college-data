@@ -7,20 +7,20 @@ NATIONAL_UNIVERSITIES = [
     {"name": "Princeton University",                          "state": "NJ"},   # #1
     {"name": "Massachusetts Institute of Technology",         "state": "MA"},   # #2
     {"name": "Harvard University",                            "state": "MA", "test_policy": "Required"},   # #3
-    {"name": "Stanford University",                           "state": "CA"},   # #3
+    {"name": "Stanford University",                           "state": "CA", "test_policy": "Required"},   # #3
     {"name": "Yale University",                               "state": "CT", "test_policy": "Required"},   # #5
     {"name": "University of Chicago",                         "state": "IL"},   # #6
-    {"name": "Johns Hopkins University",                      "state": "MD"},   # #7
+    {"name": "Johns Hopkins University",                      "state": "MD", "test_policy": "Required"},   # #7
     {"name": "University of Pennsylvania",                    "state": "PA", "test_policy": "Required"},   # #7
     {"name": "California Institute of Technology",            "state": "CA", "test_policy": "Required"},   # #9
     {"name": "Duke University",                               "state": "NC"},   # #9
     # ── 11–20 ───────────────────────────────────────────────────────────────
     {"name": "Dartmouth College",                             "state": "NH"},   # #11
-    {"name": "Northwestern University",                       "state": "IL"},   # #11
+    {"name": "Northwestern University",                       "state": "IL", "test_policy": "Required"},   # #11
     {"name": "Brown University",                              "state": "RI", "test_policy": "Required"},   # #13
     {"name": "Vanderbilt University",                         "state": "TN"},   # #13
     {"name": "Columbia University",                           "state": "NY"},   # #13
-    {"name": "Cornell University",                            "state": "NY"},   # #16
+    {"name": "Cornell University",                            "state": "NY", "test_policy": "Required"},   # #16
     {"name": "Rice University",                               "state": "TX"},   # #17
     {"name": "Washington University in St. Louis",            "state": "MO"},   # #18
     {"name": "University of Notre Dame",                      "state": "IN"},   # #19

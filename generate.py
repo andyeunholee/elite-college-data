@@ -19,6 +19,14 @@ from cache_manager import load_cache, save_cache, clear_cache, cache_age, cache_
 from fetchers.scorecard import fetch_scorecard_data
 from fetchers.gemini_fetcher import fetch_gemini_data
 from html_builder import build_html
+import json
+
+overrides = {}
+overrides_path = os.path.join(os.path.dirname(__file__), "overrides.json")
+if os.path.exists(overrides_path):
+    with open(overrides_path, "r", encoding="utf-8") as f:
+        overrides = json.load(f)
+
 
 load_dotenv()
 
@@ -31,29 +39,48 @@ OUTPUT_FILE = os.path.join(OUTPUT_DIR, "index.html")
 
 # ── Data assembly ────────────────────────────────────────────────────────────
 
+def fmt_int(val):
+    if val is None: return None
+    if isinstance(val, str): return val
+    return f"{val:,}"
+
+def fmt_money(val):
+    if val is None: return None
+    if isinstance(val, str): return f"${val}" if not val.startswith("$") else val
+    return f"${val:,}"
+
 def _merge(college: dict, scorecard: dict, gemini: dict) -> dict:
     name  = college["name"]
     state = college["state"]
     sc    = scorecard.get(name, {})
     gm    = gemini.get(name, {})
+    ov    = overrides.get(name, {})
 
-    # SAT/ACT — Gemini primary (more accurate for elite schools), Scorecard fallback
-    gm_sat = gm.get("sat_midpoint")
-    gm_act = gm.get("act_composite")
+    def _v(key):
+        return ov.get(key, gm.get(key))
+
+    # SAT/ACT
+    gm_sat = _v("sat_midpoint")
+    gm_act = _v("act_composite")
     sc_sat = sc.get("sat_total")
     sc_act = sc.get("act_midpoint")
-    sat = gm_sat or sc_sat
-    act = gm_act or sc_act
-    sat_act_ai = bool(gm_sat or gm_act)
-    parts = []
-    if sat: parts.append(f"SAT {sat}")
-    if act: parts.append(f"ACT {act}")
-    sat_act = " / ".join(parts) if parts else None
+    sat = gm_sat if gm_sat is not None else sc_sat
+    act = gm_act if gm_act is not None else sc_act
+    sat_act_ai = bool(gm_sat or gm_act) or bool(ov.get("sat_act_override"))
+    
+    sat_act_ov = ov.get("sat_act_override")
+    if sat_act_ov:
+        sat_act = sat_act_ov
+    else:
+        parts = []
+        if sat: parts.append(f"SAT {sat}")
+        if act: parts.append(f"ACT {act}")
+        sat_act = " / ".join(parts) if parts else None
 
-    # Tuition — Gemini primary (Scorecard often wrong/null for elite schools), Scorecard fallback
-    gm_t_in  = gm.get("tuition_in_state")
-    gm_t_out = gm.get("tuition_out_of_state")
-    gm_rb    = gm.get("room_board")
+    # Tuition
+    gm_t_in  = _v("tuition_in_state")
+    gm_t_out = _v("tuition_out_of_state")
+    gm_rb    = _v("room_board")
     sc_t_in  = sc.get("tuition_in")
     sc_t_out = sc.get("tuition_out")
     sc_rb    = sc.get("room_board")
@@ -65,61 +92,81 @@ def _merge(college: dict, scorecard: dict, gemini: dict) -> dict:
 
     tuition = None
     if t_in and t_out:
-        tuition = f"${t_in:,} / ${t_out:,}" if t_in != t_out else f"${t_out:,}"
+        tuition = f"{fmt_money(t_in)} / {fmt_money(t_out)}" if t_in != t_out else fmt_money(t_out)
     elif t_out:
-        tuition = f"${t_out:,}"
+        tuition = fmt_money(t_out)
     elif t_in:
-        tuition = f"${t_in:,}"
+        tuition = fmt_money(t_in)
 
-    total = (t_out + rb) if (t_out and rb) else sc.get("total_tuition")
+    total = None
+    if isinstance(t_out, str) and "*" in t_out: total = None
+    elif isinstance(rb, str) and "*" in rb: total = None
+    elif t_out and rb: total = t_out + rb
+    else: total = sc.get("total_tuition")
+    if _v("total_tuition"): total = _v("total_tuition")
 
-    # Enrollment — Gemini primary (Scorecard often wrong for elite schools), Scorecard fallback
-    gm_enroll = gm.get("total_enrollment")
+    # Enrollment
+    gm_enroll = _v("total_enrollment")
     sc_enroll  = sc.get("enrollment")
     enroll = gm_enroll if gm_enroll is not None else sc_enroll
     enroll_ai = gm_enroll is not None
 
-    # Student:Faculty ratio — Gemini primary, Scorecard fallback
-    gm_ratio = gm.get("student_faculty_ratio")
+    # Student:Faculty
+    gm_ratio = _v("student_faculty_ratio")
     sc_ratio  = sc.get("faculty_ratio")
     ratio = gm_ratio if gm_ratio is not None else sc_ratio
     ratio_ai = gm_ratio is not None
 
-    # Acceptance rate — Gemini primary (Scorecard often wrong/missing for elite schools)
-    gm_acc = gm.get("acceptance_rate_regular")
+    # Acceptance rate
+    gm_acc = _v("acceptance_rate_regular")
     sc_acc = sc.get("acceptance_rate")
     acc = gm_acc if gm_acc is not None else sc_acc
     acc_ai = gm_acc is not None
 
-    defer_raw = gm.get("defer_policy")
+    defer_raw = _v("defer_policy")
+    
+    acc_str = None
+    if acc is not None:
+        if isinstance(acc, str): acc_str = acc if "%" in acc else f"{acc}%"
+        else: acc_str = f"{acc}%"
+
+    ratio_str = None
+    if ratio is not None:
+        if isinstance(ratio, str): ratio_str = ratio
+        else: ratio_str = f"{ratio}:1"
+
+    defer_str = None
+    if isinstance(defer_raw, str): defer_str = defer_raw
+    else: defer_str = "Yes" if defer_raw is True else ("No" if defer_raw is False else None)
 
     return {
         "name":             name,
         "state":            state,
-        "_rank_raw":        gm.get("us_news_rank"),
-        "_gpa_raw":         gm.get("avg_gpa_weighted"),
-        "_test_policy_raw": college.get("test_policy") or gm.get("test_policy"),
-        "_has_ed":          bool(gm.get("has_ed")),
-        "_has_ea":          bool(gm.get("has_ea")),
-        "_has_rea":         bool(gm.get("has_rea")),
-        "_ed_deadline":     gm.get("ed_deadline"),
-        "_ea_deadline":     gm.get("ea_deadline"),
-        "_rea_deadline":    gm.get("rea_deadline"),
-        "_early_rate_raw":  gm.get("early_acceptance_rate"),
+        "_rank_raw":        _v("us_news_rank"),
+        "_gpa_raw":         _v("avg_gpa_weighted"),
+        "_test_policy_raw": ov.get("test_policy", college.get("test_policy") or gm.get("test_policy")),
+        "_has_ed":          ov.get("has_ed",     college.get("has_ed")     if "has_ed"     in college else bool(gm.get("has_ed"))),
+        "_has_ea":          ov.get("has_ea",     college.get("has_ea")     if "has_ea"     in college else bool(gm.get("has_ea"))),
+        "_has_rea":         ov.get("has_rea",    college.get("has_rea")    if "has_rea"    in college else bool(gm.get("has_rea"))),
+        "_ed_deadline":     ov.get("ed_deadline", college.get("ed_deadline") or gm.get("ed_deadline")),
+        "_ea_deadline":     ov.get("ea_deadline", college.get("ea_deadline") or gm.get("ea_deadline")),
+        "_rea_deadline":    ov.get("rea_deadline", college.get("rea_deadline") or gm.get("rea_deadline")),
+        "_due_date_raw":    ov.get("due_date_override"),
+        "_early_rate_raw":  _v("early_acceptance_rate"),
         "sat_act":          sat_act,
         "_sat_act_ai":      sat_act_ai,
-        "acceptance_rate":  f"{acc}%" if acc is not None else None,
+        "acceptance_rate":  acc_str,
         "_acc_ai":          acc_ai,
-        "enrollment":       f"{enroll:,}" if enroll else None,
+        "enrollment":       fmt_int(enroll),
         "_enrollment_ai":   enroll_ai,
-        "ratio":            f"{ratio}:1" if ratio else None,
+        "ratio":            ratio_str,
         "_ratio_ai":        ratio_ai,
         "tuition":          tuition,
         "_tuition_ai":      tuition_ai,
-        "room_board":       f"${rb:,}" if rb else None,
-        "total_tuition":    f"${total:,}" if total else None,
+        "room_board":       fmt_money(rb),
+        "total_tuition":    fmt_money(total),
         "setting":          {"City": "Urban", "Town": "Rural"}.get(sc.get("setting"), sc.get("setting")),
-        "defer":            "Yes" if defer_raw is True else ("No" if defer_raw is False else None),
+        "defer":            defer_str,
     }
 
 

@@ -134,6 +134,7 @@ thead th {
   user-select: none;
   position: sticky;
   top: 0;
+  z-index: 10;
 }
 thead th::after { content: " ⇅"; opacity: .5; font-size:.65rem; }
 thead th.asc::after  { content: " ↑"; opacity: 1; }
@@ -197,13 +198,18 @@ def _test_pill(policy):
     if not policy:
         return '<span class="na">—</span>'
     p = policy.strip()
+    suffix = ""
+    if p.endswith("*"):
+        suffix = " *"
+        p = p[:-1].strip()
+
     if p == "Required":
-        return '<span class="pill pill-req">Required</span>'
+        return f'<span class="pill pill-req">Required</span>{suffix}'
     if p == "Optional":
-        return '<span class="pill pill-opt">Optional</span>'
+        return f'<span class="pill pill-opt">Optional</span>{suffix}'
     if p in ("Blind", "Test-Blind"):
-        return '<span class="pill pill-bld">Test-Blind</span>'
-    return p
+        return f'<span class="pill pill-bld">Test-Blind</span>{suffix}'
+    return policy
 
 
 def _edea_pill(has_ed, has_ea, has_rea):
@@ -245,21 +251,28 @@ def _build_row(r: dict, num: int = 0) -> str:
     edea_html = _edea_pill(has_ed, has_ea, has_rea)
 
     # Due date (AI)
-    ed_dl  = r.get("_ed_deadline")
-    ea_dl  = r.get("_ea_deadline")
-    rea_dl = r.get("_rea_deadline")
-    due_parts = []
-    if has_rea and rea_dl:
-        due_parts.append(f"REA: {rea_dl}")
-    if has_ed and ed_dl:
-        due_parts.append(f"ED: {ed_dl}")
-    if has_ea and ea_dl:
-        due_parts.append(f"EA: {ea_dl}")
-    due_disp = " / ".join(due_parts) if due_parts else None
+    due_raw = r.get("_due_date_raw")
+    if due_raw:
+        due_disp = due_raw
+    else:
+        ed_dl  = r.get("_ed_deadline")
+        ea_dl  = r.get("_ea_deadline")
+        rea_dl = r.get("_rea_deadline")
+        due_parts = []
+        if has_rea and rea_dl:
+            due_parts.append(f"REA: {rea_dl}")
+        if has_ed and ed_dl:
+            due_parts.append(f"ED: {ed_dl}")
+        if has_ea and ea_dl:
+            due_parts.append(f"EA: {ea_dl}")
+        due_disp = " / ".join(due_parts) if due_parts else None
 
     # Early rate (AI)
     early_raw = r.get("_early_rate_raw")
-    early_disp = f"{early_raw:.1f}% ★" if early_raw else None
+    if isinstance(early_raw, str):
+        early_disp = early_raw
+    else:
+        early_disp = f"{early_raw:.1f}% ★" if early_raw is not None else None
 
     NA = '<span class="na">—</span>'
     cells = []
@@ -316,8 +329,8 @@ def _build_table(tid: str, rows: list[dict]) -> str:
         ("SAT / ACT<br><small>Midpoint</small>", ""),
         ("Test Policy", ""),
         ("Accept. Rate<br><small>Regular</small>", ""),
-        ("ED / EA", ""),
-        ("Due Date<br><small>ED / EA</small>", ""),
+        ("ED/EA/REA", ""),
+        ("Due Date<br><small>ED/EA/REA</small>", ""),
         ("Accept. Rate<br><small>Early</small>", ""),
         ("Total<br>Enrollment", ""),
         ("Student:<br>Faculty", ""),
