@@ -4,7 +4,7 @@ import os
 from datetime import datetime, timedelta
 
 CACHE_DIR = os.path.join(os.path.dirname(__file__), "cache")
-CACHE_MAX_AGE_DAYS = 30  # Refresh data if older than this
+CACHE_MAX_AGE_DAYS = 365  # Refresh data if older than this
 
 
 def _cache_path(key: str) -> str:
@@ -42,6 +42,18 @@ def clear_cache(key: str | None = None) -> None:
         for fname in os.listdir(CACHE_DIR):
             if fname.endswith(".json"):
                 os.remove(os.path.join(CACHE_DIR, fname))
+
+
+def cache_days_remaining(key: str) -> int | None:
+    """Return days until cache expires. Returns None if no cache exists."""
+    path = _cache_path(key)
+    if not os.path.exists(path):
+        return None
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    cached_at = datetime.fromisoformat(data.get("cached_at", "2000-01-01"))
+    days_elapsed = (datetime.now() - cached_at).days
+    return max(0, CACHE_MAX_AGE_DAYS - days_elapsed)
 
 
 def cache_age(key: str) -> str:

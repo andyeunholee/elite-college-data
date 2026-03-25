@@ -6,7 +6,7 @@ Run this script to fetch college data and generate output/index.html.
 Then manually upload output/index.html to Hostinger File Manager.
 
 Usage:
-  python generate.py              # use cache if fresh (<30 days)
+  python generate.py              # use cache if fresh (<365 days)
   python generate.py --refresh    # force re-fetch all data
 """
 
@@ -15,7 +15,7 @@ import argparse
 from dotenv import load_dotenv
 
 from college_lists import NATIONAL_UNIVERSITIES, LIBERAL_ARTS_COLLEGES
-from cache_manager import load_cache, save_cache, clear_cache, cache_age
+from cache_manager import load_cache, save_cache, clear_cache, cache_age, cache_days_remaining
 from fetchers.scorecard import fetch_scorecard_data
 from fetchers.gemini_fetcher import fetch_gemini_data
 from html_builder import build_html
@@ -186,10 +186,20 @@ def main():
     )
 
     print("\n🔨 Generating HTML ...")
+    all_remaining = [
+        cache_days_remaining("national_scorecard"),
+        cache_days_remaining("national_gemini"),
+        cache_days_remaining("lac_scorecard"),
+        cache_days_remaining("lac_gemini"),
+    ]
+    valid = [d for d in all_remaining if d is not None]
+    days_until_refresh = min(valid) if valid else 0
+
     html = build_html(
         nat_rows, lac_rows,
         cache_age("national_scorecard"),
         cache_age("national_gemini"),
+        days_until_refresh,
     )
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)

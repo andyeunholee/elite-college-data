@@ -471,7 +471,8 @@ document.addEventListener('DOMContentLoaded', () => {
 # ── Public: build full HTML ──────────────────────────────────────────────────
 
 def build_html(national_rows: list[dict], lac_rows: list[dict],
-               scorecard_age: str, gemini_age: str) -> str:
+               scorecard_age: str, gemini_age: str,
+               days_until_refresh: int = 0) -> str:
     nat_table = _build_table("national", national_rows)
     lac_table = _build_table("lac", lac_rows)
     now = datetime.now().strftime("%B %d, %Y %H:%M")
@@ -493,7 +494,9 @@ def build_html(national_rows: list[dict], lac_rows: list[dict],
     <sub>Top 100 National Universities &amp; Top 100 Liberal Arts Colleges · 2025–2026</sub>
   </div>
   <div class="updated">
-    Generated: {now}<br/>Scorecard: {scorecard_age} · Gemini: {gemini_age}
+    Generated: {now}<br/>
+    🔁 Auto-refresh in: <strong>{days_until_refresh} days</strong><br/>
+    Scorecard: {scorecard_age} · Gemini: {gemini_age}
     <div style="display:flex;gap:6px;justify-content:flex-end;margin-top:8px;">
       <button class="header-btn" onclick="window.top.location.href='/?action=refresh'">🔄 갱신</button>
       <button class="header-btn" onclick="window.top.location.href='/?action=force_refresh'">⚡ 강제 갱신</button>
