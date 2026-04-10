@@ -146,6 +146,8 @@ tbody td { padding: .45rem .5rem; vertical-align: middle; white-space: nowrap; }
 
 .col-rank { font-weight:700; color:#1a3a6b; text-align:center; }
 a.earth-link:hover { color:#1a73e8 !important; text-decoration:underline; }
+a.blog-link { color:inherit; text-decoration:none; }
+a.blog-link:hover { color:#1a73e8 !important; text-decoration:underline; }
 .ai-est   { background: #fff8e1; color: #7a5e00; }
 .text-center { text-align: center; }
 .text-right  { text-align: right; }
@@ -279,10 +281,14 @@ def _build_row(r: dict, num: int = 0) -> str:
     cells = []
     # 1. Row number
     cells.append(f'<td class="col-rank">{num}</td>')
-    # 2. Name (State) – state abbreviation links to Google Earth
+    # 2. Name (State) – name links to blog, state links to Google Earth
+    _name_slug = r["name"].lower().replace(' ', '-')
+    _blog_url = f'https://eliteprep4koreans.com/%E3%80%90{_name_slug}%E3%80%91-the-ultimate-parents-guide-to-admissions-and-financial-aid-for-elite-u-s-universities/'
     _earth_query = f'{r["name"]}+{r["state"]}'.replace(' ', '+')
     _earth_url = f'https://earth.google.com/web/search/{_earth_query}'
-    cells.append(f'<td><strong>{r["name"]}</strong> '
+    cells.append(f'<td><a class="blog-link" href="{_blog_url}" target="_blank" '
+                 f'title="블로그 가이드 보기">'
+                 f'<strong>{r["name"]}</strong></a> '
                  f'<a class="earth-link" href="{_earth_url}" target="_blank" '
                  f'title="Google Earth에서 보기" '
                  f'style="color:#888;text-decoration:none;cursor:pointer">'
