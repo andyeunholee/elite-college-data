@@ -1,7 +1,16 @@
 # html_builder.py
 # Converts merged college data into a complete static HTML page.
 
+import json
+import os
 from datetime import datetime
+
+# ── Blog URL mapping ───────────────────────────────────────────────────────
+_BLOG_URLS: dict[str, str] = {}
+_blog_path = os.path.join(os.path.dirname(__file__), "blog_urls.json")
+if os.path.exists(_blog_path):
+    with open(_blog_path, "r", encoding="utf-8") as f:
+        _BLOG_URLS = json.load(f)
 
 # ── CSS + colour constants ──────────────────────────────────────────────────
 _CSS = """
@@ -281,14 +290,16 @@ def _build_row(r: dict, num: int = 0) -> str:
     cells = []
     # 1. Row number
     cells.append(f'<td class="col-rank">{num}</td>')
-    # 2. Name (State) – name links to blog, state links to Google Earth
-    _name_slug = r["name"].lower().replace(' ', '-')
-    _blog_url = f'https://eliteprep4koreans.com/%E3%80%90{_name_slug}%E3%80%91-the-ultimate-parents-guide-to-admissions-and-financial-aid-for-elite-u-s-universities/'
+    # 2. Name (State) – name links to blog (if available), state links to Google Earth
+    _blog_url = _BLOG_URLS.get(r["name"])
     _earth_query = f'{r["name"]}+{r["state"]}'.replace(' ', '+')
     _earth_url = f'https://earth.google.com/web/search/{_earth_query}'
-    cells.append(f'<td><a class="blog-link" href="{_blog_url}" target="_blank" '
-                 f'title="블로그 가이드 보기">'
-                 f'<strong>{r["name"]}</strong></a> '
+    if _blog_url:
+        _name_html = (f'<a class="blog-link" href="{_blog_url}" target="_blank" '
+                      f'title="블로그 가이드 보기"><strong>{r["name"]}</strong></a>')
+    else:
+        _name_html = f'<strong>{r["name"]}</strong>'
+    cells.append(f'<td>{_name_html} '
                  f'<a class="earth-link" href="{_earth_url}" target="_blank" '
                  f'title="Google Earth에서 보기" '
                  f'style="color:#888;text-decoration:none;cursor:pointer">'
