@@ -293,7 +293,7 @@ def _build_row(r: dict, num: int = 0) -> str:
     # 2. Name (State) – name links to blog (if available), state links to Google Earth
     _blog_url = _BLOG_URLS.get(r["name"])
     _earth_query = f'{r["name"]}+{r["state"]}'.replace(' ', '+')
-    _earth_url = f'https://earth.google.com/web/search/{_earth_query}'
+    _earth_url = f'https://www.google.com/maps/search/{_earth_query}'
     if _blog_url:
         _name_html = (f'<a class="blog-link" href="{_blog_url}" target="_top" '
                       f'title="블로그 가이드 보기"><strong>{r["name"]}</strong></a>')
