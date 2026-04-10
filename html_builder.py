@@ -295,12 +295,14 @@ def _build_row(r: dict, num: int = 0) -> str:
     _earth_query = f'{r["name"]}+{r["state"]}'.replace(' ', '+')
     _earth_url = f'https://earth.google.com/web/search/{_earth_query}'
     if _blog_url:
-        _name_html = (f'<a class="blog-link" href="{_blog_url}" target="_blank" '
+        _name_html = (f'<a class="blog-link" href="{_blog_url}" '
+                      f'onclick="window.top.open(this.href,\'_blank\');return false;" '
                       f'title="블로그 가이드 보기"><strong>{r["name"]}</strong></a>')
     else:
         _name_html = f'<strong>{r["name"]}</strong>'
     cells.append(f'<td>{_name_html} '
-                 f'<a class="earth-link" href="{_earth_url}" target="_blank" '
+                 f'<a class="earth-link" href="{_earth_url}" '
+                 f'onclick="window.top.open(this.href,\'_blank\');return false;" '
                  f'title="Google Earth에서 보기" '
                  f'style="color:#888;text-decoration:none;cursor:pointer">'
                  f'({r["state"]})</a></td>')
