@@ -12,6 +12,13 @@ if os.path.exists(_blog_path):
     with open(_blog_path, "r", encoding="utf-8") as f:
         _BLOG_URLS = json.load(f)
 
+# ── College websites mapping ───────────────────────────────────────────────────
+_COLLEGE_WEBSITES: dict[str, str] = {}
+_websites_path = os.path.join(os.path.dirname(__file__), "college_websites.json")
+if os.path.exists(_websites_path):
+    with open(_websites_path, "r", encoding="utf-8") as f:
+        _COLLEGE_WEBSITES = json.load(f)
+
 # ── CSS + colour constants ──────────────────────────────────────────────────
 _CSS = """
 :root {
@@ -290,18 +297,18 @@ def _build_row(r: dict, num: int = 0) -> str:
     cells = []
     # 1. Row number
     cells.append(f'<td class="col-rank">{num}</td>')
-    # 2. Name (State) – name links to blog (if available), state links to Google Earth
-    _blog_url = _BLOG_URLS.get(r["name"])
-    _earth_query = f'{r["name"]}+{r["state"]}'.replace(' ', '+')
-    _earth_url = f'https://www.google.com/maps/search/{_earth_query}'
-    if _blog_url:
-        _name_html = (f'<a class="blog-link" href="{_blog_url}" target="_top" '
-                      f'title="블로그 가이드 보기"><strong>{r["name"]}</strong></a>')
+    # 2. Name (State) – name links to college website, state links to Google Maps
+    _website_url = _COLLEGE_WEBSITES.get(r["name"])
+    _maps_query = f'{r["name"]}+{r["state"]}'.replace(' ', '+')
+    _maps_url = f'https://www.google.com/maps/search/{_maps_query}'
+    if _website_url:
+        _name_html = (f'<a class="blog-link" href="{_website_url}" target="_blank" '
+                      f'title="공식 웹사이트 방문"><strong>{r["name"]}</strong></a>')
     else:
         _name_html = f'<strong>{r["name"]}</strong>'
     cells.append(f'<td>{_name_html} '
-                 f'<a class="earth-link" href="{_earth_url}" target="_top" '
-                 f'title="Google Earth에서 보기" '
+                 f'<a class="earth-link" href="{_maps_url}" target="_blank" '
+                 f'title="Google Maps에서 보기" '
                  f'style="color:#888;text-decoration:none;cursor:pointer">'
                  f'({r["state"]})</a></td>')
     # 3. GPA (AI)
