@@ -302,12 +302,12 @@ def _build_row(r: dict, num: int = 0) -> str:
     _maps_query = f'{r["name"]}+{r["state"]}'.replace(' ', '+')
     _maps_url = f'https://www.google.com/maps/search/{_maps_query}'
     if _website_url:
-        _name_html = (f'<a class="blog-link" href="{_website_url}" target="_blank" '
+        _name_html = (f'<a class="blog-link" href="{_website_url}" target="_top" '
                       f'title="공식 웹사이트 방문"><strong>{r["name"]}</strong></a>')
     else:
         _name_html = f'<strong>{r["name"]}</strong>'
     cells.append(f'<td>{_name_html} '
-                 f'<a class="earth-link" href="{_maps_url}" target="_blank" '
+                 f'<a class="earth-link" href="{_maps_url}" target="_top" '
                  f'title="Google Maps에서 보기" '
                  f'style="color:#888;text-decoration:none;cursor:pointer">'
                  f'({r["state"]})</a></td>')
